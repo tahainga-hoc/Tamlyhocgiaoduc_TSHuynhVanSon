@@ -219,18 +219,6 @@
                 <a class="nav-item" onclick="scrollToSection('sec-bai-tap')">2. Bài tập thực hành</a>
             </div>
             
-            <div class="nav-group" style="margin-top:25px;">
-                <h3>Công cụ không gian lớp</h3>
-                <div class="toolkit-box">
-                    <label><strong>Sơ đồ chỗ ngồi lớp học:</strong></label>
-                    <select id="seatingSelect" class="input-text" style="margin-top:5px;" onchange="updateSeatingChart()">
-                        <option value="traditional">Sơ đồ hàng dọc truyền thống</option>
-                        <option value="group">Sơ đồ cụm nhóm / Vòng tròn</option>
-                    </select>
-                    <div class="interactive-zone" id="seatingChart"></div>
-                    <p id="seatingAdvice" style="font-size:13px; margin-top:10px; color:var(--secondary);"></p>
-                </div>
-            </div>
         </aside>
 
         <main class="content-area">
@@ -307,6 +295,22 @@
                     </div>
                 </div>
             </section>
+<section class="card">
+            <h2>3.2 Thực hành: Tối ưu hóa Không gian Lớp học</h2>
+            <p style="color: var(--secondary); margin-bottom:15px; font-size:14.5px;">
+                Dựa trên các lý thuyết học tập đã nghiên cứu, hãy thử nghiệm thay đổi các mô hình sơ đồ dưới đây để đưa ra giải pháp kiểm soát "Vùng tích cực", tránh tạo điểm mù nhận thức trong lớp học của bạn:
+            </p>
+            
+            <div class="toolkit-box" style="background: #ffffff; border: 1px solid var(--border); padding: 20px; border-radius: 8px;">
+                <label><strong>Chọn mô hình bố trí lớp học:</strong></label>
+                <select id="seatingSelect" class="input-text" style="margin-top:5px; max-width: 320px;" onchange="updateSeatingChart()">
+                    <option value="traditional">Sơ đồ hàng dọc truyền thống</option>
+                    <option value="group">Sơ đồ cụm nhóm / Vòng tròn</option>
+                </select>
+                <div class="interactive-zone" id="seatingChart" style="margin-top: 20px;"></div>
+                <p id="seatingAdvice" style="font-size:14px; margin-top:15px; color:var(--secondary); line-height: 1.6;"></p>
+            </div>
+        </section>
 <section id="sec-bai-tap" class="card">
                 <h2>2. Bài tập đánh giá năng lực thực hành</h2>
                 <p style="color:#7f8c8d; margin-bottom:20px;">Hệ thống tự động sao lưu dữ liệu ngay khi bạn nhập. Đáp án chính thức hoàn toàn được giấu đi và chỉ mở khóa sau khi bạn nhấn nút Nộp câu trả lời.</p>
