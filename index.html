@@ -261,7 +261,22 @@
                         </div>
                 </div>
             </section>
-
+<section class="card">
+            <h2>3.2 Thực hành: Tối ưu hóa Không gian Lớp học</h2>
+            <p style="color: var(--secondary); margin-bottom:15px; font-size:14.5px;">
+                Dựa trên các lý thuyết học tập đã nghiên cứu, hãy thử nghiệm thay đổi các mô hình sơ đồ dưới đây để đưa ra giải pháp kiểm soát "Vùng tích cực", tránh tạo điểm mù nhận thức trong lớp học của bạn:
+            </p>
+            
+            <div class="toolkit-box" style="background: #ffffff; border: 1px solid var(--border); padding: 20px; border-radius: 8px;">
+                <label><strong>Chọn mô hình bố trí lớp học:</strong></label>
+                <select id="seatingSelect" class="input-text" style="margin-top:5px; max-width: 320px;" onchange="updateSeatingChart()">
+                    <option value="traditional">Sơ đồ hàng dọc truyền thống</option>
+                    <option value="group">Sơ đồ cụm nhóm / Vòng tròn</option>
+                </select>
+                <div class="interactive-zone" id="seatingChart" style="margin-top: 20px;"></div>
+                <p id="seatingAdvice" style="font-size:14px; margin-top:15px; color:var(--secondary); line-height: 1.6;"></p>
+            </div>
+        </section>
             <section id="sec-ban-chat" class="card">
                 <h2>1. Bản chất và cấu trúc của Hoạt động dạy & học</h2>
                 
@@ -295,22 +310,6 @@
                     </div>
                 </div>
             </section>
-<section class="card">
-            <h2>3.2 Thực hành: Tối ưu hóa Không gian Lớp học</h2>
-            <p style="color: var(--secondary); margin-bottom:15px; font-size:14.5px;">
-                Dựa trên các lý thuyết học tập đã nghiên cứu, hãy thử nghiệm thay đổi các mô hình sơ đồ dưới đây để đưa ra giải pháp kiểm soát "Vùng tích cực", tránh tạo điểm mù nhận thức trong lớp học của bạn:
-            </p>
-            
-            <div class="toolkit-box" style="background: #ffffff; border: 1px solid var(--border); padding: 20px; border-radius: 8px;">
-                <label><strong>Chọn mô hình bố trí lớp học:</strong></label>
-                <select id="seatingSelect" class="input-text" style="margin-top:5px; max-width: 320px;" onchange="updateSeatingChart()">
-                    <option value="traditional">Sơ đồ hàng dọc truyền thống</option>
-                    <option value="group">Sơ đồ cụm nhóm / Vòng tròn</option>
-                </select>
-                <div class="interactive-zone" id="seatingChart" style="margin-top: 20px;"></div>
-                <p id="seatingAdvice" style="font-size:14px; margin-top:15px; color:var(--secondary); line-height: 1.6;"></p>
-            </div>
-        </section>
 <section id="sec-bai-tap" class="card">
                 <h2>2. Bài tập đánh giá năng lực thực hành</h2>
                 <p style="color:#7f8c8d; margin-bottom:20px;">Hệ thống tự động sao lưu dữ liệu ngay khi bạn nhập. Đáp án chính thức hoàn toàn được giấu đi và chỉ mở khóa sau khi bạn nhấn nút Nộp câu trả lời.</p>
@@ -434,7 +433,7 @@
             sec_1_4: {
                 title: "1.4 Tâm lý học hoạt động và mô hình dạy học phát triển",
                 audio: "Aud_1_4_HoatDong.mp3",
-                content: "<p><strong>Nội dung giáo trình:</strong> Coi tâm lý là sự chuyển hóa nội dung từ hành động ngoài xã hội vào cấu trúc tư duy nội tại (Nội hóa).</p><ul style='margin-left:20px; margin-top:5px;'><li>L.S. Vygotsky: Dạy học đón đầu Vùng phát triển gần nhất (ZPD) thông qua các công cụ ký hiệu.</li><li>A.N. Leontiev: Cấu trúc hoạt động tương thích đa chiều giữa Động cơ - Mục đích - Phương tiện tương ứng với Hoạt động - Hành động - Thao tác.</li></ul><div class='img-container'><img src='Hinh3_CauTrucHocTap.png' onerror='this.style.display=\"none\";'><span class='img-caption'>Hình 3.1: Sơ đồ tương tác cấu trúc chuyển hóa hai tuyến của A.N. Leontiev</span></div>"
+                content: "<p><strong>Nội dung giáo trình:</strong> Coi tâm lý là sự chuyển hóa nội dung từ hành động ngoài xã hội vào cấu trúc tư duy nội tại (Nội hóa).</p><ul style='margin-left:20px; margin-top:5px;'><li>L.S. Vygotsky: Dạy học đón đầu Vùng phát triển gần nhất (ZPD) thông qua các công cụ ký hiệu.</li><li>A.N. Leontiev: Cấu trúc hoạt động tương thích đa chiều giữa Động cơ - Mục đích - Phương tiện tương ứng với Hoạt động - Hành động - Thao tác.</li></ul><div class='img-container'><img src='Hinh3_CauTrucHocTap.png' onerror='this.style.display=\"none\";'></div>"
             },
             sec_2_1: {
                 title: "2.1 Bản chất hoạt động học theo phương thức nhà trường",
