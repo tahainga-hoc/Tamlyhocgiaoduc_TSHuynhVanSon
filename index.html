@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chương 3: Cơ sở tâm lý của hoạt động dạy học</title>
+    
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
+            options: { processHtmlClass: 'tex2jax_process' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         :root {
             --primary: #1a5276;
@@ -18,7 +27,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text-dark); background-color: var(--bg-light); line-height: 1.6; }
         
-        /* Layout cấu trúc */
         .navbar { background: var(--primary); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: var(--shadow); }
         .progress-container { width: 40%; background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background: var(--accent-green); transition: width 0.3s; }
@@ -27,14 +35,12 @@
         .sidebar { width: 28%; background: white; border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; position: fixed; height: calc(100vh - 60px); left: 0; }
         .content-area { width: 72%; margin-left: 28%; padding: 40px; overflow-y: auto; }
         
-        /* Định dạng nội dung lý thuyết */
         .card { background: white; border-radius: 8px; border: 1px solid var(--border); padding: 25px; margin-bottom: 30px; box-shadow: var(--shadow); }
         h1, h2, h3 { color: var(--primary); margin-bottom: 15px; }
         .nav-group { margin-bottom: 20px; }
         .nav-item { display: block; padding: 10px 15px; color: var(--secondary); text-decoration: none; border-radius: 6px; margin-bottom: 5px; cursor: pointer; transition: 0.2s; }
         .nav-item:hover, .nav-item.active { background: #eaf2f8; color: var(--primary); font-weight: bold; }
         
-        /* Bảng & Tab tương tác */
         .tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
         .tab-btn { padding: 12px 20px; border: none; background: none; cursor: pointer; font-size: 15px; color: var(--secondary); border-bottom: 2px solid transparent; transition: 0.2s; }
         .tab-btn.active { color: var(--primary); border-bottom: 2px solid var(--primary); font-weight: bold; }
@@ -46,18 +52,15 @@
         .flat-table th { background: var(--primary); color: white; font-weight: 600; }
         .flat-table tr:nth-child(even) { background: #fdfefe; }
         
-        /* Hộp Accordion */
         .accordion-item { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 10px; overflow: hidden; }
         .accordion-header { background: #f2f4f4; padding: 15px; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; }
         .accordion-content { padding: 15px; background: white; display: none; border-top: 1px solid var(--border); }
         
-        /* Giao diện tương tác giả lập */
         .toolkit-box { background: #f4f6f7; border-left: 4px solid var(--accent-orange); padding: 15px; margin-top: 15px; border-radius: 0 6px 6px 0; }
         .interactive-zone { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 15px 0; background: #eaeded; padding: 15px; border-radius: 8px; text-align: center; }
         .desk { padding: 15px 5px; background: white; border: 1px solid var(--border); border-radius: 4px; font-size: 12px; font-weight: bold; }
         .desk.active-zone { background: #fadbd8; border-color: #e74c3c; color: #c0392b; }
         
-        /* Thành phần bài tập & Trạng thái nộp bài */
         .quiz-item { background: #fdfefe; border: 1px solid var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px; }
         .options-group { margin: 15px 0; }
         .option-label { display: block; margin-bottom: 10px; cursor: pointer; }
@@ -69,16 +72,19 @@
         .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; display: inline-block; transition: 0.2s; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: #154360; }
-        .btn-success { background: var(--accent-green); color: white; }
-        .btn-success:hover { background: #1e8449; }
         
-        .feedback-box { margin-top: 15px; padding: 15px; border-radius: 6px; display: none; font-size: 14px; }
+        .feedback-box { margin-top: 15px; padding: 15px; border-radius: 6px; display: none; font-size: 14px; line-height: 1.6; }
         .feedback-correct { background: #d4efdf; color: #196f3d; border: 1px solid #a9dfbf; }
         .feedback-review { background: #fdebd0; color: #b9770e; border: 1px solid #f5cbb7; }
-        .backup-status { font-size: 12px; color: #7f8c8d; margin-top: 5px; display: block; }
+        .backup-status { font-size: 12px; color: #7f8c8d; margin-top: 5px; display: block; height: 15px; }
         
-        /* Media hỗ trợ trực quan */
-        .media-placeholder { background: #ebf5fb; border: 1px dashed var(--primary); color: var(--primary); padding: 15px; text-align: center; border-radius: 6px; margin: 15px 0; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .img-container { text-align: center; margin: 20px 0; padding: 15px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+        .img-container img { max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 1px 5px rgba(0,0,0,0.1); }
+        .img-caption { display: block; margin-top: 8px; font-size: 13px; color: #566573; font-style: italic; }
+        
+        .audio-wrapper { background: #f4f6f7; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .audio-wrapper p { font-size: 14px; font-weight: bold; color: var(--primary); }
+        audio { width: 100%; max-width: 500px; }
     </style>
 </head>
 <body>
@@ -91,15 +97,14 @@
         </div>
     </nav>
 
-    <div class="main-layout">
-        <!-- THANH ĐIỀU HƯỚNG BÊN CẠNH (SIDEBAR) -->
+    <div class="main-layout tex2jax_process">
         <aside class="sidebar">
             <div class="nav-group">
                 <h3>Nội dung bài học</h3>
                 <a class="nav-item active" onclick="scrollToSection('sec-muc-tieu')">Mục tiêu Chương 3</a>
                 <a class="nav-item" onclick="scrollToSection('sec-ly-thuyet')">1. Bốn lý thuyết cốt lõi</a>
-                <a class="nav-item" onclick="scrollToSection('sec-ban-chat')">2. Bản chất "dạy" & "học"</a>
-                <a class="nav-item" onclick="scrollToSection('sec-tich-cuc')">3. Tích cực hóa dạy Học</a>
+                <a class="nav-item" onclick="scrollToSection('sec-ban-chat')">2. Bản chất Dạy & Học</a>
+                <a class="nav-item" onclick="scrollToSection('sec-tich-cuc')">3. Tích cực hóa Dạy Học</a>
                 <a class="nav-item" onclick="scrollToSection('sec-bai-tap')">4. Bài tập thực hành</a>
             </div>
             
@@ -117,10 +122,7 @@
             </div>
         </aside>
 
-        <!-- KHU VỰC HIỂN THỊ NỘI DUNG CHÍNH -->
         <main class="content-area">
-            
-            <!-- PHÂN HỆ MỞ ĐẦU -->
             <section id="sec-muc-tieu" class="card">
                 <h2>Mục tiêu phát triển năng lực chương 3</h2>
                 <p style="margin-bottom:15px; color:#7f8c8d;">Hãy tích chọn các mục tiêu sau khi bạn đã hoàn thành việc tự học:</p>
@@ -136,17 +138,15 @@
                     <input type="checkbox" id="target_3" onchange="saveData('target_3', this.checked)"> 
                     <strong>Phẩm chất nghề nghiệp:</strong> Hình thành tư duy dạy học hướng vào người học, tôn trọng tính chủ thể.
                 </label>
-                <span class="backup-status" id="target-backup-msg"></span>
+                <span class="backup-status" id="target_1-backup-msg"></span>
             </section>
-
-            <!-- PHÂN HỆ 1: BỐN LÝ THUYẾT TÂM LÝ HỌC -->
-            <section id="sec-ly-thuyet" class="card">
-                <h2>1. Hệ thống hóa 4 lý thuyết tâm lý học giáo dục cốt lõi</h2>
+<section id="sec-ly-thuyet" class="card">
+                <h2>1. Hệ thống hóa 4 lý thuyết Tâm lý học giáo dục cốt lõi</h2>
                 <div class="tabs">
                     <button class="tab-btn active" onclick="switchTab(event, 'th-lien-tuong')">Thuyết Liên Tưởng</button>
                     <button class="tab-btn" onclick="switchTab(event, 'th-hanh-vi')">Thuyết Hành Vi</button>
                     <button class="tab-btn" onclick="switchTab(event, 'th-kien-tao')">Kiến Tạo Nhận Thức</button>
-                    <button class="tab-btn" onclick="switchTab(event, 'th-hoat-dong')">Tâm Lý Học Hoạt Động</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'th-hoat-dong')">TLH Hoạt Động</button>
                 </div>
 
                 <div id="th-lien-tuong" class="tab-panel active">
@@ -158,29 +158,30 @@
                     <p><strong>Cơ chế tâm lý:</strong> Mối quan hệ kích thích - phản ứng hành vi bản chất. Bao gồm:</p>
                     <ul style="margin-left:20px; margin-top:5px;">
                         <li>Điều kiện hóa cổ điển: $S \rightarrow R$</li>
-                        <li>Điều kiện hóa tạo tác: thử và sai, củng cố tích cực hoặc trách phạt.</li>
+                        <li>Điều kiện hóa tạo tác: Thử và sai, củng cố tích cực hoặc trách phạt.</li>
                         <li>Nhận thức xã hội: Học tập bằng quan sát mẫu và bắt chước hành vi.</li>
                     </ul>
                 </div>
 
                 <div id="th-kien-tao" class="tab-panel">
-                    <p><strong>Cơ chế tâm lý:</strong> Biện chứng giữa đồng hóa và điều ứng. Cá nhân tự tổ chức hành động tìm tòi để tự cấu tạo và tái cấu trúc hệ thống nhận thức (*schema*).</p>
+                    <p><strong>Cơ chế tâm lý:</strong> Biện chứng giữa Đồng hóa và Điều ứng. Cá nhân tự tổ chức hành động tìm tòi để tự cấu tạo và tái cấu trúc hệ thống nhận thức ($schema$).</p>
                     <p style="margin-top:10px;"><strong>Ứng dụng sư phạm:</strong> Hành động học tập khám phá. Học sinh trải nghiệm qua các giai đoạn tịnh tiến: Phân tích thực tiễn $\rightarrow$ Mô hình hóa bản chất $\rightarrow$ Ký hiệu hóa tri thức.</p>
                 </div>
 
                 <div id="th-hoat-dong" class="tab-panel">
-                    <p><strong>Cơ chế tâm lý:</strong> Sự chuyển nội hàm từ ngoài vào trong cấu trúc tâm lý (nội hóa) thông qua hoạt động và giao tiếp xã hội.</p>
-                    <ul style="margin-left:20px; margin-top:5px;">
+                    <p><strong>Cơ chế tâm lý:</strong> Sự chuyển nội hàm từ ngoài vào trong cấu trúc tâm lý (Nội hóa) thông qua hoạt động và giao tiếp xã hội.</p>
+                    <ul style="margin-left:20px; margin-top:5px; margin-bottom:15px;">
                         <li><strong>Vygotsky:</strong> Chức năng tâm lý cấp cao gắn liền với công cụ ký hiệu ($A \leftrightarrow X \leftrightarrow B$); dạy học đón đầu Vùng phát triển gần nhất (ZPD).</li>
                         <li><strong>Leontiev:</strong> Cấu trúc hoạt động được điều chỉnh thông qua tương tác giữa Động cơ - Mục đích - Phương tiện tương ứng với Hoạt động - Hành động - Thao tác.</li>
                     </ul>
-                    <div class="media-placeholder">
-                        📁 <em>Cần chèn sơ đồ cấu trúc: Hinh3_CauTrucHocTap.png để minh họa trực quan dòng dịch chuyển hai tuyến của Leontiev.</em>
+                    
+                    <div class="img-container">
+                        <img src="Hinh3_CauTrucHocTap.png" alt="Sơ đồ cấu trúc hoạt động học tập" onerror="this.onerror=null; this.parentElement.innerHTML='<p style=\'color:var(--accent-orange); font-size:13px;\'>⚠️ Vui lòng sao chép ảnh Hinh3_CauTrucHocTap.png vào cùng thư mục để hiển thị sơ đồ.</p>';">
+                        <span class="img-caption">Hình 3.1: Sơ đồ tương tác cấu trúc chuyển hóa hai tuyến của A.N. Leontiev</span>
                     </div>
                 </div>
             </section>
 
-            <!-- PHÂN HỆ 2 & 3: BẢN CHẤT HOẠT ĐỘNG DẠY VÀ HỌC -->
             <section id="sec-ban-chat" class="card">
                 <h2>2. Bản chất và cấu trúc của Hoạt động Dạy & Học</h2>
                 
@@ -233,22 +234,23 @@
                 </div>
             </section>
 
-            <!-- PHÂN HỆ 4: TÍCH CỰC HÓA HOẠT ĐỘNG DẠY HỌC -->
             <section id="sec-tich-cuc" class="card">
                 <h2>3. Biện pháp tích cực hóa hoạt động dạy học</h2>
                 <p>Điều hòa và kiểm soát các cấp độ tích cực của người học từ <strong>Bắt chước $\rightarrow$ Tìm tòi $\rightarrow$ Sáng tạo</strong>.</p>
                 
-                <div class="media-placeholder" style="margin-top:15px;">
-                    🔊 <em>Cần chèn file âm thanh giảng bài: GiaiThich_Weinstein_Model.mp3 để làm rõ bản chất 3 phân khúc thời gian (Thời gian phân bổ, Thời gian cam kết, Thời gian hiệu quả thực tế).</em>
+                <div class="audio-wrapper">
+                    <p>🎧 Nghe bài giảng: Mô hình 3 phân khúc thời gian của Weinstein</p>
+                    <audio controls id="mainAudio">
+                        <source src="GiaiThich_Weinstein_Model.mp3" type="audio/mpeg">
+                        Trình duyệt của bạn không hỗ trợ công cụ nghe âm thanh.
+                    </audio>
                 </div>
             </section>
 
-            <!-- PHÂN HỆ 5: BÀI TẬP THỰC HÀNH TƯƠNG TÁC -->
             <section id="sec-bai-tap" class="card">
                 <h2>4. Bài tập đánh giá năng lực thực hành</h2>
                 <p style="color:#7f8c8d; margin-bottom:20px;">Hệ thống tự động sao lưu dữ liệu ngay khi bạn nhập. Đáp án chính thức sẽ hiển thị ngay sau khi bấm nộp bài.</p>
 
-                <!-- CÂU 1: TRẮC NGHIỆM -->
                 <div class="quiz-item" id="quiz-c1">
                     <h3>Câu 1 (Trắc nghiệm): Đối tượng cốt lõi của hoạt động học là gì?</h3>
                     <div class="options-group">
@@ -267,7 +269,6 @@
                     <div class="feedback-box" id="fb-c1"></div>
                 </div>
 
-                <!-- CÂU 2: TỰ LUẬN / GÕ ĐÁP ÁN -->
                 <div class="quiz-item" id="quiz-c2">
                     <h3>Câu 2 (Gõ đáp án): Khái niệm lý thuyết nào của Vygotsky chỉ ra khoảng cách giữa năng lực tự chủ hiện tại và năng lực có thể đạt dưới sự hướng dẫn?</h3>
                     <p style="font-size:13px; color:#7f8c8d;">(Gợi ý: Viết tắt bằng ký tự tiếng Anh gồm 3 chữ cái)</p>
@@ -277,7 +278,6 @@
                     <div class="feedback-box" id="fb-c2"></div>
                 </div>
 
-                <!-- CÂU 3: CHỤP ẢNH BÀI LÀM TRÊN GIẤY -->
                 <div class="quiz-item" id="quiz-c3">
                     <h3>Câu 3 (Nộp sản phẩm tự luận): Vẽ sơ đồ tư duy cấu trúc hoạt động học của Leontiev ra giấy, chụp lại và đính kèm lên hệ thống.</h3>
                     <div class="file-upload-zone" onclick="document.getElementById('file-input').click()">
@@ -286,56 +286,48 @@
                         <img id="image-preview" class="preview-img" alt="Xem trước bài tập">
                     </div>
                     <button class="btn btn-primary" style="margin-top:15px;" onclick="submitQuiz('c3', 'IMAGE_UPLOADED')">Nộp câu trả lời</button>
-                    <span class="backup-status" id="q3_file-backup-msg"></span>
+                    <span class="backup-status" id="q3_ans-backup-msg"></span>
                     <div class="feedback-box" id="fb-c3"></div>
                 </div>
-
             </section>
         </main>
     </div>
-<script>
-        // --- 1. LOGIC SAO LƯU DỮ LIỆU TỰ ĐỘNG (LOCALSTORAGE BACKUP) ---
+
+    <script>
         function saveData(key, value) {
             localStorage.setItem(key, value);
-            const msgElement = document.getElementById(`${key}-backup-msg`);
+            const msgElement = document.getElementById(`${key}-backup-msg`) || document.getElementById('target_1-backup-msg');
             if (msgElement) {
-                msgElement.innerText = "✓ Dữ liệu nhập vào đã được sao lưu tự động trên hệ thống.";
-                setTimeout(() => { msgElement.innerText = ""; }, 2500);
+                msgElement.innerText = "✓ Hệ thống đã tự động sao lưu dữ liệu vừa nhập.";
+                setTimeout(() => { msgElement.innerText = ""; }, 2000);
             }
         }
 
-        // Khôi phục dữ liệu người dùng đã nhập khi tải lại trang
         window.onload = function() {
-            // Khôi phục mục tiêu
             if(localStorage.getItem('target_1') === 'true') document.getElementById('target_1').checked = true;
             if(localStorage.getItem('target_2') === 'true') document.getElementById('target_2').checked = true;
             if(localStorage.getItem('target_3') === 'true') document.getElementById('target_3').checked = true;
             
-            // Khôi phục câu 1
             const savedQ1 = localStorage.getItem('q1_ans');
             if(savedQ1) {
                 const radio = document.querySelector(`input[name="q1"][value="${savedQ1}"]`);
                 if(radio) radio.checked = true;
             }
             
-            // Khôi phục câu 2
             if(localStorage.getItem('q2_ans')) {
                 document.getElementById('q2_text').value = localStorage.getItem('q2_ans');
             }
             
-            // Khôi phục ảnh câu 3 nếu có
             if(localStorage.getItem('q3_file_base64')) {
                 const img = document.getElementById('image-preview');
                 img.src = localStorage.getItem('q3_file_base64');
                 img.style.display = 'block';
-                document.getElementById('upload-text').innerText = "🔄 Đã nạp ảnh từ dữ liệu sao lưu cũ. Bấm để thay đổi.";
+                document.getElementById('upload-text').innerText = "🔄 Đã nạp lại ảnh từ bản sao lưu. Bấm để thay đổi.";
             }
 
-            // Chạy sơ đồ lớp học mặc định
             updateSeatingChart();
         };
 
-        // Xử lý tệp hình ảnh tự luận và nén lưu chuỗi Base64 làm dữ liệu sao lưu cục bộ
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -351,7 +343,6 @@
             }
         }
 
-        // --- 2. XỬ LÝ ĐÁP ÁN VÀ PHẢN HỒI CHÍNH THỨC (GIẤU ĐÁP ÁN) ---
         function submitQuiz(quizId, correctAns) {
             const fbBox = document.getElementById(`fb-${quizId}`);
             fbBox.style.display = "block";
@@ -371,7 +362,6 @@
                     fbBox.innerHTML = `<strong>Chưa chính xác!</strong> Đáp án chính thức là <strong>B</strong>. Phương án bạn chọn (${selected.value}) chưa phản ánh đúng đối tượng đích của hoạt động học tập khoa học.`;
                 }
             } 
-            
             else if (quizId === 'c2') {
                 const userAns = document.getElementById('q2_text').value.trim().toUpperCase();
                 if (!userAns) {
@@ -387,7 +377,6 @@
                     fbBox.innerHTML = `<strong>Chưa khớp!</strong> Đáp án đúng là <strong>ZPD</strong>. Bạn đã nhập "${userAns}". Hãy rà soát kỹ lại phần lý thuyết của Vygotsky.`;
                 }
             } 
-            
             else if (quizId === 'c3') {
                 const hasImg = localStorage.getItem('q3_file_base64');
                 if (!hasImg) {
@@ -400,7 +389,6 @@
             }
         }
 
-        // --- 3. ĐIỀU HƯỚNG VÀ HIỆU ỨNG GIAO DIỆN (UI/UX) ---
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -417,16 +405,10 @@
         function toggleAccordion(header) {
             const content = header.nextElementSibling;
             const icon = header.querySelector('span:last-child');
-            if(content.style.display === "block") {
-                content.style.display = "none";
-                icon.innerText = "▼";
-            } else {
-                content.style.display = "block";
-                icon.innerText = "▲";
-            }
+            content.style.display = (content.style.display === "block") ? "none" : "block";
+            icon.innerText = (content.style.display === "block") ? "▲" : "▼";
         }
 
-        // Theo dõi tiến trình cuộn trang để cập nhật Navbar Progress
         window.onscroll = function() {
             const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -434,7 +416,6 @@
             document.getElementById("readingProgress").style.width = scrolled + "%";
         };
 
-        // Giả lập sơ đồ chỗ ngồi tương tác
         function updateSeatingChart() {
             const type = document.getElementById('seatingSelect').value;
             const chart = document.getElementById('seatingChart');
@@ -442,11 +423,11 @@
             chart.innerHTML = "";
             
             if(type === 'traditional') {
-                advice.innerHTML = "💡 <strong>Khuyên nghị sư phạm:</strong> Vùng màu hồng là <strong>Vùng tích cực (Active Zone)</strong>. Giáo viên nên chủ động dịch chuyển cơ thể xuống hàng cuối hoặc gọi học sinh ở hai bên rìa để tránh tạo điểm mù.";
+                advice.innerHTML = "💡 <strong>Khuyến nghị sư phạm:</strong> Vùng màu hồng là <strong>Vùng tích cực (Active Zone)</strong>. Giáo viên nên chủ động dịch chuyển cơ thể xuống hàng cuối hoặc gọi học sinh ở hai bên rìa để tránh tạo điểm mù.";
                 for(let i=1; i<=10; i++) {
                     const desk = document.createElement('div');
                     desk.className = `desk ${i <= 5 ? 'active-zone' : ''}`;
-                    desk.innerText = i <= 5 ? `Bàn ${i} (Tích cực)` : `Bàn ${i}`;
+                    desk.innerText = i <= 5 ? `Bàn ${i}` : `Bàn ${i}`;
                     chart.appendChild(desk);
                 }
             } else {
@@ -455,7 +436,7 @@
                     const desk = document.createElement('div');
                     desk.className = "desk";
                     desk.style.borderColor = "var(--primary)";
-                    desk.innerText = `Cụm Nhóm ${i}`;
+                    desk.innerText = `Nhóm ${i}`;
                     chart.appendChild(desk);
                 }
             }
