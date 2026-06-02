@@ -90,6 +90,38 @@
         .feedback-correct { background: #d4efdf; color: #196f3d; border: 1px solid #a9dfbf; }
         .feedback-review { background: #fdebd0; color: #b9770e; border: 1px solid #f5cbb7; }
         .backup-status { font-size: 12px; color: #7f8c8d; margin-top: 5px; display: block; height: 15px; }
+/* 1. LÀM ĐẸP THANH CUỘN NỘI BỘ CHO KHUNG SÁCH GỐC */
+        .book-content::-webkit-scrollbar {
+            width: 6px; /* Độ rộng của thanh cuộn */
+        }
+        .book-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .book-content::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* Màu thanh cuộn */
+            border-radius: 4px;
+        }
+        .book-content::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 2. CỐ ĐỊNH TRÌNH PHÁT ÂM THANH Ở TRÊN CÙNG */
+        .book-audio-bar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: #f4f6f7;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Tạo bóng đổ nhẹ khi cuộn chữ */
+        }
     </style>
 </head>
 <body>
@@ -152,7 +184,7 @@
                         <div class="toc-node active-node" onclick="loadBookSection('sec_1_1', this)">1.1 Thuyết liên tưởng</div>
                         <div class="toc-node" onclick="loadBookSection('sec_1_2', this)">1.2 Thuyết hành vi</div>
                         <div class="toc-node" onclick="loadBookSection('sec_1_3', this)">1.3 Thuyết kiến tạo</div>
-                        <div class="toc-node" onclick="loadBookSection('sec_1_4', this)">1.4 TLH hoạt động</div>
+                        <div class="toc-node" onclick="loadBookSection('sec_1_4', this)">1.4 Tâm lý học hoạt động</div>
                         
                         <div class="toc-heading">2. Bản chất dạy & học</div>
                         <div class="toc-node" onclick="loadBookSection('sec_2_1', this)">2.1 Bản chất hoạt động học</div>
@@ -168,7 +200,7 @@
             </section>
 
             <section id="sec-ban-chat" class="card">
-                <h2>1. Bản chất và cấu trúc của Hoạt động Dạy & Học</h2>
+                <h2>1. Bản chất và cấu trúc của Hoạt động dạy & học</h2>
                 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
@@ -250,15 +282,71 @@
         // --- 1. DỮ LIỆU TOÀN VĂN SÁCH GỐC (DATABASE ĐỀ MỤC) ---
         const bookDatabase = {
             sec_1_1: {
-                title: "1.1 Thuyết liên tưởng và mô hình dạy học thông báo",
-                audio: "Aud_1_1_LienTuong.mp3",
-                content: "<p><strong>Nội dung giáo trình:</strong> Thuyết liên tưởng có nguồn gốc từ quan điểm triết học của Aristotle. Cơ chế tâm lý cốt lõi là sự kết hợp các cảm giác, hình thành đường liên hệ tạm thời trong vỏ não nhờ kích thích tác động bên ngoài.</p><p style='margin-top:10px;'>Mô hình dạy học tương ứng là <em>Dạy học thông báo</em>. Giáo viên đóng vai trò nguồn phát tri thức có sẵn, tác động vào các giác quan và bộ nhớ tái tạo của người học, duy trì chặt chẽ mối quan hệ Chủ thể - Đối tượng truyền thống.</p>"
-            },
-            sec_1_2: {
-                title: "1.2 Thuyết hành vi và mô hình dạy học điều khiển hành vi",
-                audio: "Aud_1_2_HanhVi.mp3",
-                content: "<p><strong>Nội dung giáo trình:</strong> Trường phái tập trung vào mối quan hệ kích thích - phản ứng ($S \\rightarrow R$). Bao gồm ba nhánh chính:</p><ul style='margin-left:20px; margin-top:5px;'><li>Điều kiện hóa cổ điển (Pavlov): Kích thích có điều kiện tạo phản xạ.</li><li>Điều kiện hóa tạo tác (Skinner): Cơ chế thử - sai kết hợp các hình thức củng cố tích cực hoặc trách phạt.</li><li>Thuyết nhận thức xã hội (Bandura): Học tập bằng cách quan sát mẫu hành vi của người khác.</li></ul>"
-            },
+        title: "1.1 Thuyết liên tưởng và mô hình dạy học thông báo",
+        audio: "Aud_1_1_LienTuong.mp3",
+        content: `
+            <p><strong>Nguồn gốc:</strong> Thuyết liên tưởng có nguồn gốc từ quan điểm triết học của Aristotle, đặc biệt phát triển mạnh mẽ từ thế kỷ XVII, với những ảnh hưởng nhất định của triết học duy cảm Anh. Có thể kể đến một số đại diện tiêu biểu như: T. Hobbes, G. Berkeley, D. Hume, D. Hartley, J. Locke…</p>
+            
+            <h4 style="margin: 15px 0 5px 0; color: var(--primary);">❖ Một số luận điểm chính của thuyết liên tưởng</h4>
+            <p>Các nhà tâm lý học theo thuyết liên tưởng cho rằng sự lĩnh hội kinh nghiệm xã hội thực chất là sự lĩnh hội các liên tưởng. Cụ thể:</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>Tâm lý được cấu thành từ các cảm giác. Các cấu thành cao hơn như biểu tượng, ý nghĩ, xúc cảm tình cảm… xuất hiện dựa trên sự liên tưởng của các cảm giác. Hay nói khác đi, con đường hình thành tâm lý người là sự liên kết các cảm giác và ý tưởng.</li>
+                <li>Điều kiện để hình thành liên tưởng là sự gần gũi của các quá trình tâm lý.</li>
+                <li>Sự liên kết các cảm giác và ý tưởng để hình thành ý tưởng mới không đơn thuần là sự kết hợp giản đơn mà phải tuân theo những mối liên hệ nhất định.</li>
+                <li>Liên tưởng được quy định bởi sự linh hoạt của các cảm giác và ý tưởng thành phần, cũng như tần số nhắc lại của chúng trong kinh nghiệm cá nhân.</li>
+                <li>Các quy luật hình thành liên tưởng: quy luật tương tự, quy luật tương cận, quy luật nhân quả. Trong đó quy luật nhân quả là quan trọng nhất.</li>
+            </ul>
+
+            <h4 style="margin: 15px 0 5px 0; color: var(--primary);">❖ Mô hình dạy học thông báo (Dạy học truyền thống)</h4>
+            <p>Dựa trên nền tảng của Thuyết liên tưởng, mô hình dạy học thông báo được xây dựng nhằm truyền thụ tri thức và kinh nghiệm lịch sử xã hội cho người học một cách hệ thống.</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li><strong>Bản chất:</strong> Là quá trình người dạy truyền đạt, thông báo các tri thức đã được chuẩn hóa, hệ thống hóa; người học tiếp nhận, ghi nhớ và thiết lập các mối liên tưởng theo logic của bài học để phục vụ cho các tình huống cần thiết.</li>
+                <li><strong>Tính chất:</strong> Dạy học theo mô hình này là sự tác động vào các giác quan và trí nhớ của người học, cung cấp các sự kiện, các hình ảnh, tri thức để người học có các cảm giác, hình thành các hình ảnh, tạo ra các kích thích để học viên xác lập các mối liên tưởng, giúp người học ôn luyện, củng cố và khôi phục các mối liên tưởng.</li>
+                <li><strong>Mối quan hệ người dạy – người học:</strong> Quan hệ <em>Chủ thể - Đối tượng</em>. Người dạy chủ động sử dụng các phương pháp tác động trực tiếp vào giác quan và trí nhớ của người học; chủ động cung cấp cho người học các sự kiện có sẵn, được liên kết với nhau theo luật cho trước. Người học thụ động tiếp nhận các thông tin từ người dạy và thiết lập các mối liên tưởng theo yêu cầu của người dạy, qua đó hình thành kinh nghiệm, phát triển giác quan, trí nhớ và tư duy tái tạo.</li>
+            </ul>
+
+            <p style="margin-top: 10px;">Ngày nay, do sự phát triển của công nghệ thông tin, dạy học thông báo được phát triển theo hướng mô hình của lý thuyết thông tin. Trong đó, mối quan tâm của nhà sư phạm là chất lượng thông tin đầu vào (các tri thức cần dạy cho người học), quá trình xử lý, liên kết các thông tin, lưu giữ và khôi phục thông tin, các phản ứng của người học ở đầu ra. Quá trình xử lý, liên kết, lưu trữ và khôi phục thông tin liên quan trực tiếp đến cơ chế làm việc của trí nhớ và tư duy của người học.</p>
+        `
+    },
+           sec_1_2: {
+        title: "1.2 Thuyết hành vi và một số mô hình dạy học điều khiển hành vi",
+        audio: "Aud_1_2_HanhVi.mp3",
+        content: `
+            <p>Tâm lý học hành vi là trường phái tâm lý học xuất hiện ở Mỹ vào đầu thế kỷ XX và phổ biến từ đó cho đến nay, với một số luận điểm cơ bản như sau:</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>Đối tượng nghiên cứu, hình thành, kiểm soát và điều chỉnh là <strong>hành vi của cá thể</strong>. Đó là các phản ứng có thể được quan sát và lượng hóa từ bên ngoài, chứ không phải là các hiện tượng ý thức bên trong.</li>
+                <li>Mối quan hệ giữa kích thích từ môi trường và sự hình thành các phản ứng của cá thể là quan hệ nhân quả. Công thức tổng quát ở đây là: kích thích $\\rightarrow$ phản ứng ($S \\rightarrow R$). Vì vậy, nguyên tắc nghiên cứu và hình thành các hành vi được bắt đầu từ việc nghiên cứu và hình thành các kích thích từ bên ngoài.</li>
+                <li>Sự hình thành, điều chỉnh, dập tắt hành vi bị chi phối bởi một số yếu tố và quy luật được phát biểu, khai thác theo nhiều góc độ bởi các lý thuyết khác nhau.</li>
+            </ul>
+
+            <h4 style="margin: 20px 0 8px 0; color: var(--primary);">1.2.1. Mô hình dạy học điều kiện hóa cổ điển</h4>
+            <p>Cơ sở lý luận của mô hình dạy học này là thuyết hành vi cổ điển của J. Watson dựa trên các phát hiện về phản xạ có điều kiện của I.P. Pavlov:</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li><strong>Nguyên lý chung:</strong> Một kích thích trung tính nếu liên tục được kết hợp với một kích thích có điều kiện (gây ra một phản ứng tự nhiên) thì sau một số lần lặp lại, kích thích trung tính đó cũng sẽ tự kích hoạt được phản ứng ban đầu.</li>
+                <li><strong>Ứng dụng trong dạy học:</strong> Nhà sư phạm sử dụng các tác nhân kích thích tích cực của môi trường để tạo ra các phản ứng mong muốn ở người học; hướng dẫn học viên thiết lập các liên kết giữa kích thích và phản ứng để hình thành hành vi học tập; củng cố các hành vi đúng và dập tắt các hành vi sai lệch.</li>
+            </ul>
+
+            <h4 style="margin: 20px 0 8px 0; color: var(--primary);">1.2.2. Mô hình dạy học điều kiện hóa hành vi tạo tác</h4>
+            <p>Mô hình này dựa trên thuyết hành vi tạo tác của B.F. Skinner, đưa ra một góc nhìn chủ động hơn:</p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li><strong>Cơ chế cốt lõi:</strong> Hành vi tạo tác là những hành vi được cá thể phát ra một cách chủ động nhằm tác động vào môi trường. Nếu hành vi đó mang lại kết quả thỏa mãn (được <strong>củng cố tích cực</strong>) thì tần suất xuất hiện của nó sẽ tăng lên. Ngược lại, nếu dẫn đến hậu quả không mong muốn hoặc bị phạt, hành vi đó sẽ bị suy giảm hoặc dập tắt.</li>
+                <li><strong>Ứng dụng trong dạy học:</strong> Skinner đề xuất mô hình <em>"Dạy học chương trình hóa"</em>. Nội dung bài học được chia nhỏ thành các bước tịnh tiến (modules). Ngay sau khi thực hiện xong một bước và phản hồi đúng, học sinh sẽ nhận được kích thích củng cố ngay lập tức (lời khen, điểm số, phần thưởng). Việc này giúp người học tự điều khiển, tự kiểm tra hành vi học tập của mình theo tiến độ cá nhân.</li>
+            </ul>
+
+            <h4 style="margin: 20px 0 8px 0; color: var(--primary);">1.2.3. Mô hình dạy học nhận thức xã hội (Học tập quan sát)</h4>
+            <p>Mô hình này gắn liền với tên tuổi của Albert Bandura, mở rộng thuyết hành vi truyền thống bằng cách đan cài yếu tố nhận thức nội tại:</p>
+            <p>Công thức vận hành được nâng cấp thành: kích thích $\\rightarrow$ nhận thức $\\rightarrow$ phản ứng $\\rightarrow$ củng cố ($S \\rightarrow r \\rightarrow s \\rightarrow R$). Người học không chỉ phản ứng thụ động mà có xu hướng quan sát và mô hình hóa hành vi của người làm mẫu thành các <strong>"mô hình hành vi"</strong> nội tại trong trí não.</p>
+            
+            <p style="margin-top: 10px;"><strong>Các nhân tố và hình thức củng cố quan trọng:</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li>4 giai đoạn của học tập quan sát bao gồm: <em>Chú ý $\\rightarrow$ Ghi nhớ $\\rightarrow$ Tái tạo vận động $\\rightarrow$ Động cơ</em>.</li>
+                <li><strong>Củng cố thay thế:</strong> Người học không cần nhận phần thưởng trực tiếp, chỉ cần nhìn thấy người làm mẫu (ví dụ: một học sinh gương mẫu được cô giáo khen) nhận được củng cố tích cực là họ đã có động lực để bắt chước theo.</li>
+                <li><strong>Tự củng cố:</strong> Đây là hình thức cao nhất, mang ý nghĩa sư phạm lớn lao. Người học tự đánh giá kết quả hành động của mình dựa trên các tiêu chuẩn nội tại của bản thân và tự điều khiển tác nhân củng cố để phát triển liên tục.</li>
+            </ul>
+            
+            <p style="margin-top: 10px;"><strong>Lưu ý sư phạm:</strong> Mức độ hiệu quả của học tập quan sát chịu ảnh hưởng mạnh bởi địa vị, uy tín và mức độ tương đồng của người làm mẫu đối với người học. Do đó, việc xây dựng tác phong sư phạm chuẩn mực của giáo viên và nêu gương các cá nhân điển hình trong tập thể lớp là vô cùng quan trọng.</p>
+        `
+    },
             sec_1_3: {
                 title: "1.3 Thuyết kiến tạo và mô hình dạy học khám phá",
                 audio: "Aud_1_3_KienTao.mp3",
